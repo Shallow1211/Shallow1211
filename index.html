@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--修改自http://codepen.io/lucamalattia/pen/apwZVg -->
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style> 
+    @import url("https://fonts.googleapis.com/css?family=Lobster+Two:700,700i|Space+Mono");
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Space Mono", monospace;
+  background-image: -webkit-linear-gradient(bottom, #ccc, #eee);
+  background-image: linear-gradient(to top, #ccc, #eee);
+}
+
+.notepad {
+  position: relative;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.holes {
+  position: absolute;
+  width: 100%;
+  top: 6px;
+  left: 0;
+  z-index: 4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.holes .hole {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin: 0 10px;
+  border-radius: 50%;
+  background-color: #137160;
+}
+.holes .hole:after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -4px;
+  width: 4px;
+  height: 30px;
+  background-color: #137160;
+  border-radius: 2px;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+  opacity: 0.7;
+}
+
+.rings {
+  position: absolute;
+  width: 100%;
+  top: -7px;
+  left: 0;
+  z-index: 6;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.rings .ring {
+  position: relative;
+  width: 6px;
+  height: 20px;
+  margin: 0 12px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: inset 2px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.bottom, .top {
+  position: relative;
+  background-color: #1bbc9b;
+  width: 150px;
+  height: 200px;
+  border-radius: 8px;
+}
+
+.bottom {
+  overflow: hidden;
+  box-shadow: 0 15px 8px -6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+.bottom:after {
+  content: "";
+  position: absolute;
+  top: -85%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-transform: rotateZ(60deg);
+          transform: rotateZ(60deg);
+  z-index: 2;
+}
+
+.top {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  -webkit-transform: rotateX(45deg);
+          transform: rotateX(45deg);
+  -webkit-transform-origin: top center;
+          transform-origin: top center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.top .label {
+  font-family: "Lobster Two", cursive;
+  font-size: 2rem;
+  font-style: italic;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.sheets {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sheet {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 130px;
+  height: 180px;
+  background-image: -webkit-repeating-linear-gradient(top, #fff, #fff 5%, #ccc 6%);
+  background-image: repeating-linear-gradient(to bottom, #fff, #fff 5%, #ccc 6%);
+  background-repeat: 20 20;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/** Simple Page Style */
+.page {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.page__head {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  text-align: center;
+  padding: 1rem 0;
+}
+.page__head h1 {
+  font-family: "Lobster Two", cursive;
+  font-size: 4rem;
+  font-style: italic;
+  margin: 0;
+  color: #333;
+}
+.page__head h4 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0.5rem 0 0;
+  color: #777;
+}
+.page__body {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+    </style>
+</head>
+<body>
+    
+<div class="page" id="dailyCSSImage">
+  <div class="page__head">
+    <h1>歡迎來到Node.js開發課程</h1>
+    <h4>課程 10</h4>
+  </div>
+  <div class="page__body">
+    <div class="notepad">
+      <div class="holes">
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+      </div>
+      <div class="rings">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+      <div class="bottom"></div>
+      <div class="sheets">
+        <div class="sheet"></div>
+      </div>
+      <div class="top">
+        <h4 class="label">Day 10</h4>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
