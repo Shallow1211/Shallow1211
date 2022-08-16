@@ -1,0 +1,71 @@
+ar EventEmitter = require('events');
+
+console.log(EventEmitter);
+
+var emitter = new EventEmitter();
+
+
+
+emitter.on('sleep', function () {
+console.log('going to sleep');
+});
+function night() {
+emitter.emit('sleep');
+}
+night();
+
+
+function Human() {};
+
+Human.prototype.__proto__ = EventEmitter.prototype;
+
+var man = new Human;
+
+man.on('sleeping', function () {
+console.log('sleeping');
+});
+
+man.emit('sleeping');
+
+
+function Human() {};
+
+Human.prototype.__proto__ = EventEmitter.prototype;
+
+var man = new Human;
+
+man.once('sleeping', function () {
+console.log('sleeping');
+});
+
+man.emit('sleeping');
+man.emit('sleeping');
+
+
+emitter.on('message', console.log);
+
+setInterval(function(){
+emitter.emit('message', 'HIHI');
+// }, 500);
+
+setTimeout(function(){
+emitter.removeListener('message', console.log);
+}, 2000);
+
+setMaxListeners()
+EventEmiter
+emitter.setMaxListeners(20);
+
+emitter.removeAllListeners("slepping");
+
+var emitter = new EventEmitter;
+
+function getAll () {
+  console.log(emitter.listeners("sleeping"));
+}
+emitter.on("sleeping", callback)
+emitter.on("sleeping", callback1)
+
+function callback() {};
+function callback1() {};
+getAll ();
